@@ -9,11 +9,15 @@ public abstract class Simulation extends Model {
     private Collection<Agent> agents;
 
     public void start(){
-        // TODO - start agents
+        for(Agent a: agents){
+            a.start();
+        }
     }
 
     public void suspend(){
-        // TODO - suspend agents
+        for(Agent a: agents){
+            a.suspend();
+        }
     }
 
     public void resume(){
@@ -21,7 +25,9 @@ public abstract class Simulation extends Model {
     }
 
     public void stop(){
-        // TODO - stop agents
+        for(Agent a: agents){
+            a.stop();
+        }
     }
 
     public Agent getNeighbor(Agent agent, double radius){

@@ -11,7 +11,7 @@ public abstract class Agent implements Serializable, Runnable {
 
     private boolean suspended = false;
     private boolean stopped = false;
-    private Thread myThread;
+    transient protected Thread myThread;
 
     @Override
     public void run() {
@@ -25,6 +25,10 @@ public abstract class Agent implements Serializable, Runnable {
     }
     public void resume(){
         // TODO - resume the agent
+    }
+    public void stop(){
+        // TODO - stop the agent
+
     }
     public abstract void update();  // child classes should flush this out
 
