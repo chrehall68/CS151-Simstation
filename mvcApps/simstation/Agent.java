@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 public abstract class Agent implements Serializable, Runnable {
     protected String name;
-    protected Heading heading; // TODO - figure out if Heading is a real class
+    protected Heading heading;
     protected int xc; // x coordinate
     protected int yc; // y coordinate
     protected Simulation world;
