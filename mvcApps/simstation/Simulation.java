@@ -26,34 +26,37 @@ public abstract class Simulation extends Model {
         }
     }
 
-    public void start(){
-        for(Agent a: agents){
+    public void start() {
+        for (Agent a : agents) {
             a.start();
         }
     }
 
-    public void suspend(){
-        for(Agent a: agents){
+    public void suspend() {
+        for (Agent a : agents) {
             a.suspend();
         }
     }
 
-    public void resume(){
+    public void resume() {
         // TODO - resume agents
     }
 
-    public void stop(){
-        for(Agent a: agents){
+    public void stop() {
+        for (Agent a : agents) {
             a.stop();
         }
     }
 
-    public Agent getNeighbor(Agent agent, double radius){
+    public Agent getNeighbor(Agent agent, double radius) {
         // TODO - get neighbor
 
         return null;
     }
 
     public abstract void populate();
+
+    // should return a string describing the current simulation statistics
+    public abstract String stats();
 
 }

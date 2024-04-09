@@ -10,6 +10,7 @@ public class SimulationPanel extends AppPanel {
     private JButton resume;
     private JButton stop;
     private JButton stats;
+
     public SimulationPanel(AppFactory factory) {
 
         super(factory);
@@ -19,11 +20,11 @@ public class SimulationPanel extends AppPanel {
         stop = new JButton("Stop");
         stats = new JButton("Stats");
 
-        start.addActionListener(SimulationPanel.this);
-        suspend.addActionListener(SimulationPanel.this);
-        resume.addActionListener(SimulationPanel.this);
-        stop.addActionListener(SimulationPanel.this);
-        stats.addActionListener(SimulationPanel.this);
+        start.addActionListener(this);
+        suspend.addActionListener(this);
+        resume.addActionListener(this);
+        stop.addActionListener(this);
+        stats.addActionListener(this);
 
         controls.add(start);
         controls.add(suspend);

@@ -8,4 +8,9 @@ public class FlockingFactory extends SimStationFactory {
     public Model makeModel() {
         return new Sky();
     }
+
+    @Override
+    public String getTitle() {
+        return "Flocking Simulator";
+    }
 }
