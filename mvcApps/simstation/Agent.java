@@ -15,7 +15,9 @@ public abstract class Agent implements Serializable, Runnable {
 
     @Override
     public void run() {
-        // TODO - run the agent
+        // TODO - implementation
+
+        world.changed();
     }
     public void start(){
         // TODO - start the agent
@@ -34,5 +36,9 @@ public abstract class Agent implements Serializable, Runnable {
 
     public void move(int steps){
         // TODO - move this agent
+        for (int i = 0; i < steps; i++){
+            //move 1 step
+            world.changed();
+        }
     }
 }

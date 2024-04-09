@@ -50,6 +50,7 @@ public abstract class Simulation extends Model {
 
     public Agent getNeighbor(Agent agent, double radius){
         // TODO - get neighbor
+
         return null;
     }
 

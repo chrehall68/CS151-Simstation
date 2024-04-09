@@ -1,14 +1,12 @@
 package simstation;
 
-import mvc.AppFactory;
-import mvc.Command;
-import mvc.Model;
-import mvc.View;
+import mvc.*;
 
 public abstract class SimStationFactory implements AppFactory {
+    public abstract Model makeModel();
     @Override
     public View makeView(Model m) {
-        return new SimulationView(m);
+        return new SimulationView((Simulation)m);
     }
 
     @Override
@@ -27,12 +25,23 @@ public abstract class SimStationFactory implements AppFactory {
     }
 
     @Override
-    public String[] getEditCommands() {
-        return new String[0];
-    }
+    public String[] getEditCommands() { return new String[] {"Start", "Suspend", "Resume", "Stop", "Stats"}; }
 
     @Override
     public Command makeEditCommand(Model model, String name, Object source) {
-        return null;  // TODO - make edit commands here
+        switch (name) {
+            case "Start":
+                return new SimstationCommands.StartCommand(model);
+            case "Suspend":
+                return new SimstationCommands.SuspendCommand(model);
+            case "Resume":
+                return new SimstationCommands.ResumeCommand(model);
+            case "Stop":
+                return new SimstationCommands.StopCommand(model);
+            case "Stats":
+                return new SimstationCommands.StatsCommand(model);
+            default:
+                return null;
+        }
     }
 }
