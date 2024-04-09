@@ -6,10 +6,8 @@ import java.awt.*;
 import java.util.Iterator;
 
 public class SimulationView extends View {
-    // TODO static values
-    protected final static int AGENT_SIZE = 5;
-    protected Color agentColor = Color.GRAY;
-    protected Color backgroundColor = Color.BLACK;
+    protected Color agentColor = Color.WHITE;
+    protected Color backgroundColor = Color.DARK_GRAY;
 
     public SimulationView(Model model) {
         super(model);
@@ -17,13 +15,15 @@ public class SimulationView extends View {
     }
 
     protected void drawAgents(Graphics gc) {
-        Simulation simulation = (Simulation)model;
-        Iterator<Agent> it = simulation.agentIterator();
+        Iterator<Agent> it = model.as(Simulation.class).agentIterator();
         gc.setColor(agentColor);
-        int centerOffset = AGENT_SIZE / 2;
-        while (((Iterator<?>) it).hasNext()) {
+
+        double cellWidth = ((double)getWidth())/ Simulation.SIZE;
+        double cellHeight = ((double)getHeight())/ Simulation.SIZE;
+
+        while (it.hasNext()) {
             Agent c = it.next();
-            gc.fillOval(c.xc - centerOffset, c.yc - centerOffset, AGENT_SIZE, AGENT_SIZE);
+            gc.fillOval((int)(c.getXc() *cellWidth), (int)(c.getYc() *cellHeight), (int)cellWidth, (int)cellHeight);
         }
     }
 
@@ -31,8 +31,8 @@ public class SimulationView extends View {
         super.paintComponent(gc);
         Color oldColor = gc.getColor();
 
-        gc.setColor(Color.BLACK);
-        gc.drawRect(0,0, Simulation.SIZE, Simulation.SIZE);
+        gc.setColor(backgroundColor);
+        gc.fillRect(0,0, getWidth(), getHeight());
         drawAgents(gc);
 
         gc.setColor(oldColor);

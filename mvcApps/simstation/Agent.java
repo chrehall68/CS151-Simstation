@@ -7,8 +7,9 @@ import java.util.function.Consumer;
 import java.io.Serializable;
 
 public abstract class Agent implements Serializable, Runnable {
+    private static final int sleepMS = 50;
     protected String name;
-    protected Heading heading; // TODO - figure out if Heading is a real class
+    protected Heading heading;
     protected int xc; // x coordinate
     protected int yc; // y coordinate
     protected Simulation world;
@@ -47,6 +48,10 @@ public abstract class Agent implements Serializable, Runnable {
         suspended = false;
         stopped = false;
         myThread = null;
+
+        // randomly initialize position
+        xc = Utilities.rng.nextInt(Simulation.SIZE);
+        yc = Utilities.rng.nextInt(Simulation.SIZE);
     }
 
     @Override
@@ -56,7 +61,7 @@ public abstract class Agent implements Serializable, Runnable {
         while (!stopped) {
             try {
                 update();
-                Thread.sleep(20);
+                Thread.sleep(sleepMS);
                 checkSuspended();
             } catch (InterruptedException e) {
                 Utilities.error(e);
@@ -103,11 +108,9 @@ public abstract class Agent implements Serializable, Runnable {
     }
 
     public void move(int steps) {
-        // TODO - move this agent
         for (int i = 0; i < steps; i++) {
             // move 1 step
             Agent.moveMap.get(heading).accept(this);
-
             world.changed();
         }
     }
@@ -136,4 +139,7 @@ public abstract class Agent implements Serializable, Runnable {
             Utilities.error(e);
         }
     }
+
+    public synchronized int getXc(){ return xc; }
+    public synchronized int getYc(){ return yc; }
 }
