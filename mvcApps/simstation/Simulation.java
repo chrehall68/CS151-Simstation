@@ -6,46 +6,64 @@ import mvc.*;
 import java.util.Collection;
 
 public abstract class Simulation extends Model {
+    public final static int SIZE = 250;
     private Collection<Agent> agents;
+    private boolean isRunning;
+    private boolean isSuspended;
     transient private Timer timer; // timers aren't serializable
     private int clock;
 
-    private void startTimer() {
-        timer = new Timer();
-        timer.scheduleAtFixedRate(new ClockUpdater(), 1000, 1000);
+    public Simulation() {
+        super();
+        agents = new LinkedList<Agent>();
+        clock = 0;
+        isRunning = false;
+        isSuspended = false;
     }
 
-    private void stopTimer() {
-        timer.cancel();
-        timer.purge();
-    }
-
-    private class ClockUpdater extends TimerTask {
-        public void run() {
-            clock++;
-        }
+    public Iterator<Agent> agentIterator() { // use for drawing all agents
+        return agents.iterator();
     }
 
     public void start() {
+        clock = 0;
+        startTimer();
+        agents.clear();
+        populate();
         for (Agent a : agents) {
             a.start();
         }
+        isRunning = true;
+        isSuspended = false;
+        changed();
     }
 
     public void suspend() {
+        stopTimer();
         for (Agent a : agents) {
             a.suspend();
         }
+        isSuspended = true;
+        changed();
     }
 
     public void resume() {
-        // TODO - resume agents
+        startTimer();
+        for (Agent a : agents) {
+            a.resume();
+        }
+        isSuspended = false;
+        changed();
     }
 
     public void stop() {
+        stopTimer();
         for (Agent a : agents) {
             a.stop();
         }
+        isRunning = false;
+        isSuspended = false;
+        changed();
     }
 
     public Agent getNeighbor(Agent agent, double radius) {
@@ -58,5 +76,34 @@ public abstract class Simulation extends Model {
 
     // should return a string describing the current simulation statistics
     public abstract String stats();
+
+    public void addAgent(Agent agent) {
+        agents.add(agent);
+
+    }
+
+    private void startTimer() {
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new ClockUpdater(), 1000, 1000);
+    }
+
+    private void stopTimer() {
+        timer.cancel();
+        timer.purge();
+    }
+
+    public boolean isRunning() {
+        return isRunning;
+    }
+
+    public boolean isSuspended() {
+        return isSuspended;
+    }
+
+    private class ClockUpdater extends TimerTask {
+        public void run() {
+            clock++;
+        }
+    }
 
 }

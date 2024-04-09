@@ -2,7 +2,7 @@ package simstation.flocking;
 
 import simstation.*;
 
-public class Sky extends Simulation {
+public class FlockingSimulation extends Simulation {
     @Override
     public void populate() {
 

@@ -3,6 +3,8 @@ package simstation;
 import mvc.*;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
 
 public class SimulationPanel extends AppPanel {
     private JButton start;
@@ -32,6 +34,17 @@ public class SimulationPanel extends AppPanel {
         controls.add(stop);
         controls.add(stats);
 
+    }
+    public void actionPerformed(ActionEvent actionEvent) {
+        String cmmd = actionEvent.getActionCommand();
+        Simulation simulation = (Simulation) model;
+
+        if ((cmmd == "Save" || cmmd == "SaveAs")
+                && (simulation.isRunning() && !simulation.isSuspended())) {
+            Utilities.error("Cannot save active simulation that isn't suspended. Please suspend it first.");
+            return;
+        }
+        super.actionPerformed(actionEvent);
     }
 
 }
