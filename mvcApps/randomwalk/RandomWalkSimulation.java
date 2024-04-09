@@ -1,4 +1,4 @@
-package simstation.randomwalk;
+package randomwalk;
 
 import mvc.AppPanel;
 import simstation.Simulation;

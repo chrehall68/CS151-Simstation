@@ -1,4 +1,4 @@
-package simstation.flocking;
+package flocking;
 
 import simstation.*;
 public class Bird extends Agent{

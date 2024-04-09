@@ -1,4 +1,4 @@
-package simstation.flocking;
+package flocking;
 
 import mvc.AppFactory;
 import simstation.*;
