@@ -75,7 +75,9 @@ public abstract class Simulation extends Model {
     public abstract void populate();
 
     // should return a string describing the current simulation statistics
-    public abstract String stats();
+    public String stats() {
+        return "" + agents.size() + " agents alive.";
+    }
 
     public void addAgent(Agent agent) {
         agents.add(agent);
