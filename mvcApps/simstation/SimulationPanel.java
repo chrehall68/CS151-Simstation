@@ -16,6 +16,8 @@ public class SimulationPanel extends AppPanel {
     public SimulationPanel(AppFactory factory) {
 
         super(factory);
+        controls.setLayout(new BoxLayout(controls, BoxLayout.Y_AXIS));
+
         start = new JButton("Start");
         suspend = new JButton("Suspend");
         resume = new JButton("Resume");
