@@ -6,6 +6,6 @@ import simstation.*;
 public class FlockingFactory extends SimStationFactory {
     @Override
     public Model makeModel() {
-        return new Sky();
+        return new FlockingSimulation();
     }
 }
