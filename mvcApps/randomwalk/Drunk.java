@@ -4,7 +4,6 @@ import mvc.*;
 import simstation.*;
 
 class Drunk extends Agent {
-
     public Drunk() {
         super();
         heading = Heading.random();
