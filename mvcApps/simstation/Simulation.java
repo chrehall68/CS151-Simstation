@@ -3,11 +3,9 @@ package simstation;
 import java.util.*;
 import mvc.*;
 
-import java.util.Collection;
-
 public abstract class Simulation extends Model {
     public final static int SIZE = 250;
-    private Collection<Agent> agents;
+    private final ArrayList<Agent> agents;  // arraylist for O(1) random access time
     private boolean isRunning;
     private boolean isSuspended;
     transient private Timer timer; // timers aren't serializable
@@ -15,7 +13,7 @@ public abstract class Simulation extends Model {
 
     public Simulation() {
         super();
-        agents = new LinkedList<Agent>();
+        agents = new ArrayList<>();
         clock = 0;
         isRunning = false;
         isSuspended = false;
@@ -66,17 +64,26 @@ public abstract class Simulation extends Model {
         changed();
     }
 
+    private double getDistance(Agent agent1, Agent agent2){
+        // pythagorean theorem for distance
+        return Math.sqrt(Math.pow(agent1.getXc()-agent2.getXc(), 2) + Math.pow(agent1.getYc()-agent2.getYc(), 2));
+    }
     public Agent getNeighbor(Agent agent, double radius) {
-        // TODO - get neighbor
+        int start = Utilities.rng.nextInt(agents.size());
+        for (int i = 0; i < agents.size(); ++i){
+            Agent cur = agents.get((start + i)%agents.size());
+            if (getDistance(cur, agent) < radius){
+                return cur;
+            }
+        }
 
         return null;
     }
 
     public abstract void populate();
 
-    // should return a string describing the current simulation statistics
-    public String stats() {
-        return "" + agents.size() + " agents alive.";
+    public String[] getStats() {
+        return new String[]{"#agents = " + agents.size()};
     }
 
     public void addAgent(Agent agent) {

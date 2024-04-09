@@ -7,7 +7,7 @@ import java.util.function.Consumer;
 import java.io.Serializable;
 
 public abstract class Agent implements Serializable, Runnable {
-    private static final int sleepMS = 50;
+    private static final int SLEEP_MS = 50;
     protected String name;
     protected Heading heading;
     protected int xc; // x coordinate
@@ -49,7 +49,8 @@ public abstract class Agent implements Serializable, Runnable {
         stopped = false;
         myThread = null;
 
-        // randomly initialize position
+        // randomly initialize position and heading
+        heading = Heading.random();
         xc = Utilities.rng.nextInt(Simulation.SIZE);
         yc = Utilities.rng.nextInt(Simulation.SIZE);
     }
@@ -61,7 +62,7 @@ public abstract class Agent implements Serializable, Runnable {
         while (!stopped) {
             try {
                 update();
-                Thread.sleep(sleepMS);
+                Thread.sleep(SLEEP_MS);
                 checkSuspended();
             } catch (InterruptedException e) {
                 Utilities.error(e);

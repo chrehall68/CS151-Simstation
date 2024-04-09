@@ -45,7 +45,7 @@ public class SimStationCommands {
 
         @Override
         public void execute() throws Exception {
-            Utilities.inform(model.as(Simulation.class).stats());
+            Utilities.inform(model.as(Simulation.class).getStats());
         }
     }
 

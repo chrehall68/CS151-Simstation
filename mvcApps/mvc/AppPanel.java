@@ -64,6 +64,12 @@ public class AppPanel extends JPanel implements ActionListener, Subscriber {
     public void display() {
         display(800, 800);
     }
+    /**
+     * Creates a frame and displays the app panel. This is what should be
+     * inside every `main` method in a customization. It is blocking.
+     * @param width - the desired initial width of the frame
+     * @param height - the desired initial height of the fram
+     */
     public void display(int width, int height){
         SafeFrame frame = new SafeFrame();
         Container cp = frame.getContentPane();
