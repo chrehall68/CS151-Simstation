@@ -11,4 +11,5 @@ public class RandomWalkPanel extends SimulationPanel {
         AppFactory factory = new RandomWalkFactory();
         RandomWalkPanel panel = new RandomWalkPanel(factory);
         panel.display();
-    }}
+    }
+}
