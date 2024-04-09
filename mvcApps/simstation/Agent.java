@@ -103,11 +103,9 @@ public abstract class Agent implements Serializable, Runnable {
     }
 
     public void move(int steps) {
-        // TODO - move this agent
         for (int i = 0; i < steps; i++) {
             // move 1 step
             Agent.moveMap.get(heading).accept(this);
-
             world.changed();
         }
     }

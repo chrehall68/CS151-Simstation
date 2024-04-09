@@ -27,7 +27,7 @@ public class SimulationPanel extends AppPanel {
         String cmmd = actionEvent.getActionCommand();
         Simulation simulation = (Simulation) model;
 
-        if ((cmmd == "Save" || cmmd == "SaveAs")
+        if ((cmmd.equals("Save") || cmmd.equals("SaveAs"))
                 && (simulation.isRunning() && !simulation.isSuspended())) {
             Utilities.error("Cannot save active simulation that isn't suspended. Please suspend it first.");
             return;
