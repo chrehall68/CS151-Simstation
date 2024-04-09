@@ -81,7 +81,7 @@ public abstract class Simulation extends Model {
 
     public void addAgent(Agent agent) {
         agents.add(agent);
-
+        agent.setWorld(this);
     }
 
     private void startTimer() {
