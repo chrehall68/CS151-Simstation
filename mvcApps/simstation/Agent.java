@@ -2,6 +2,8 @@ package simstation;
 
 import mvc.Utilities;
 
+import java.util.Map;
+import java.util.function.Consumer;
 import java.io.Serializable;
 
 public abstract class Agent implements Serializable, Runnable {
@@ -13,6 +15,28 @@ public abstract class Agent implements Serializable, Runnable {
     private boolean suspended = false;
     private boolean stopped = false;
     transient protected Thread myThread;
+
+    // mapping for heading -> action
+    private static final Map<Heading, Consumer<Agent>> moveMap = Map.of(Heading.EAST, Agent::moveLeft,
+            Heading.WEST, Agent::moveRight,
+            Heading.NORTH, Agent::moveUp,
+            Heading.SOUTH, Agent::moveDown,
+            Heading.NORTHEAST, agent -> {
+                Agent.moveLeft(agent);
+                Agent.moveUp(agent);
+            },
+            Heading.NORTHWEST, agent -> {
+                Agent.moveRight(agent);
+                Agent.moveUp(agent);
+            },
+            Heading.SOUTHEAST, agent -> {
+                Agent.moveLeft(agent);
+                Agent.moveDown(agent);
+            },
+            Heading.SOUTHWEST, agent -> {
+                Agent.moveRight(agent);
+                Agent.moveDown(agent);
+            });
 
     public Agent(String name) {
         this.name = name;
@@ -62,64 +86,27 @@ public abstract class Agent implements Serializable, Runnable {
 
     public abstract void update(); // child classes should flush this out
 
-    private void moveLeft() {
-        xc = (xc + Simulation.SIZE - 1) % Simulation.SIZE;
+    private static void moveLeft(Agent agent) {
+        agent.xc = (agent.xc + Simulation.SIZE - 1) % Simulation.SIZE;
     }
 
-    private void moveRight() {
-        xc = (xc + 1) % Simulation.SIZE;
+    private static void moveRight(Agent agent) {
+        agent.xc = (agent.xc + 1) % Simulation.SIZE;
     }
 
-    private void moveUp() {
-        yc = (yc + Simulation.SIZE - 1) % Simulation.SIZE;
+    private static void moveUp(Agent agent) {
+        agent.yc = (agent.yc + Simulation.SIZE - 1) % Simulation.SIZE;
     }
 
-    private void moveDown() {
-        yc = (yc + 1) % Simulation.SIZE;
+    private static void moveDown(Agent agent) {
+        agent.yc = (agent.yc + 1) % Simulation.SIZE;
     }
 
     public void move(int steps) {
         // TODO - move this agent
         for (int i = 0; i < steps; i++) {
             // move 1 step
-            switch (heading) {
-                case EAST: {
-                    moveLeft();
-                    break;
-                }
-                case WEST: {
-                    moveRight();
-                    break;
-                }
-                case NORTH: {
-                    moveUp();
-                    break;
-                }
-                case SOUTH: {
-                    moveDown();
-                    break;
-                }
-                case NORTHEAST: {
-                    moveUp();
-                    moveLeft();
-                    break;
-                }
-                case NORTHWEST: {
-                    moveUp();
-                    moveRight();
-                    break;
-                }
-                case SOUTHEAST: {
-                    moveDown();
-                    moveLeft();
-                    break;
-                }
-                case SOUTHWEST: {
-                    moveDown();
-                    moveRight();
-                    break;
-                }
-            }
+            Agent.moveMap.get(heading).accept(this);
 
             world.changed();
         }
