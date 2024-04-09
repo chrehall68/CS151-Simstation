@@ -1,45 +1,36 @@
 package simstation;
 
-import mvc.Utilities;
+public class Heading {
+    private final double xDir;
+    private final double yDir;
 
-public enum Heading {
-    NORTH,
-    NORTHEAST,
-    EAST,
-    SOUTHEAST,
-    SOUTH,
-    SOUTHWEST,
-    WEST,
-    NORTHWEST;
+    public Heading(double xDir, double yDir) {
+        // convert to unit
+        // x^2 + y^2 should equal 1
+        double total = Math.pow(xDir, 2) + Math.pow(yDir, 2);
 
-    public static Heading random(){
-        int num = Utilities.rng.nextInt(8) + 1;
-        switch (num){
-            case 1: {
-                return NORTH;
-            }
-            case 2: {
-                return NORTHWEST;
-            }
-            case 3: {
-                return NORTHEAST;
-            }
-            case 4: {
-                return SOUTH;
-            }
-            case 5: {
-                return SOUTHWEST;
-            }
-            case 6: {
-                return SOUTHEAST;
-            }
-            case 7: {
-                return EAST;
-            }
-            case 8: {
-                return WEST;
-            }
-        }
-        return null;
+        // x^2 + y^2 = total
+        // x^2/total + y^2/total = 1
+        // (x/sqrt(total))^2 + (y/sqrt(total))^2 = 1
+        double sqrt = Math.sqrt(total);
+        this.xDir = xDir / sqrt;
+        this.yDir = yDir / sqrt;
+    }
+
+    public double getxDir() {
+        return xDir;
+    }
+
+    public double getyDir() {
+        return yDir;
+    }
+
+    public static Heading random() {
+        double xDir = Math.random();
+        double yDir = Math.sqrt(1 - Math.pow(xDir, 2));
+
+        double xMul = Math.random() < 0.5 ? 1 : -1;
+        double yMul = Math.random() < 0.5 ? 1 : -1;
+        return new Heading(xDir * xMul, yDir * yMul);
     }
 }

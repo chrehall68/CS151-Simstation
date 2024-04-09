@@ -2,42 +2,18 @@ package simstation;
 
 import mvc.Utilities;
 
-import java.util.Map;
-import java.util.function.Consumer;
 import java.io.Serializable;
 
 public abstract class Agent implements Serializable, Runnable {
     private static final int SLEEP_MS = 50;
     protected String name;
     protected Heading heading;
-    protected int xc; // x coordinate
-    protected int yc; // y coordinate
+    protected double xc; // x coordinate
+    protected double yc; // y coordinate
     protected Simulation world;
     private boolean suspended = false;
     private boolean stopped = false;
     transient protected Thread myThread;
-
-    // mapping for heading -> action
-    private static final Map<Heading, Consumer<Agent>> moveMap = Map.of(Heading.EAST, Agent::moveLeft,
-            Heading.WEST, Agent::moveRight,
-            Heading.NORTH, Agent::moveUp,
-            Heading.SOUTH, Agent::moveDown,
-            Heading.NORTHEAST, agent -> {
-                Agent.moveLeft(agent);
-                Agent.moveUp(agent);
-            },
-            Heading.NORTHWEST, agent -> {
-                Agent.moveRight(agent);
-                Agent.moveUp(agent);
-            },
-            Heading.SOUTHEAST, agent -> {
-                Agent.moveLeft(agent);
-                Agent.moveDown(agent);
-            },
-            Heading.SOUTHWEST, agent -> {
-                Agent.moveRight(agent);
-                Agent.moveDown(agent);
-            });
 
     public Agent(String name) {
         this.name = name;
@@ -92,26 +68,11 @@ public abstract class Agent implements Serializable, Runnable {
 
     public abstract void update(); // child classes should flush this out
 
-    private static void moveLeft(Agent agent) {
-        agent.xc = (agent.xc + Simulation.SIZE - 1) % Simulation.SIZE;
-    }
-
-    private static void moveRight(Agent agent) {
-        agent.xc = (agent.xc + 1) % Simulation.SIZE;
-    }
-
-    private static void moveUp(Agent agent) {
-        agent.yc = (agent.yc + Simulation.SIZE - 1) % Simulation.SIZE;
-    }
-
-    private static void moveDown(Agent agent) {
-        agent.yc = (agent.yc + 1) % Simulation.SIZE;
-    }
-
     public void move(int steps) {
         for (int i = 0; i < steps; i++) {
             // move 1 step
-            Agent.moveMap.get(heading).accept(this);
+            xc = (xc + Simulation.SIZE + heading.getxDir()) % Simulation.SIZE;
+            yc = (yc + Simulation.SIZE + heading.getyDir()) % Simulation.SIZE;
             world.changed();
         }
     }
@@ -141,6 +102,11 @@ public abstract class Agent implements Serializable, Runnable {
         }
     }
 
-    public synchronized int getXc(){ return xc; }
-    public synchronized int getYc(){ return yc; }
+    public synchronized double getXc() {
+        return xc;
+    }
+
+    public synchronized double getYc() {
+        return yc;
+    }
 }

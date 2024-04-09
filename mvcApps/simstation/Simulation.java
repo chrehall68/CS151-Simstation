@@ -79,6 +79,15 @@ public abstract class Simulation extends Model {
 
         return null;
     }
+    public List<Agent> getAllNeighbors(Agent agent, double radius) {
+        LinkedList<Agent> result = new LinkedList<>();
+        for (Agent cur : agents){
+            if (getDistance(cur, agent) < radius){
+                result.add(cur);
+            }
+        }
+        return result;
+    }
 
     public abstract void populate();
 
