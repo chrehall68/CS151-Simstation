@@ -62,13 +62,16 @@ public class AppPanel extends JPanel implements ActionListener, Subscriber {
      * inside every `main` method in a customization. It is blocking.
      */
     public void display() {
+        display(800, 800);
+    }
+    public void display(int width, int height){
         SafeFrame frame = new SafeFrame();
         Container cp = frame.getContentPane();
         cp.add(this);
 
         frame.setJMenuBar(this.createMenuBar());
         frame.setTitle(factory.getTitle());
-        frame.setSize(800, 800);
+        frame.setSize(width, height);
         frame.setVisible(true);
     }
 
