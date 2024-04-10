@@ -20,7 +20,7 @@ public abstract class Agent implements Serializable, Runnable {
     }
 
     public Agent() {
-        super();
+        //super();
         suspended = false;
         stopped = false;
         myThread = null;

@@ -4,8 +4,8 @@ import java.util.*;
 import mvc.*;
 
 public abstract class Simulation extends Model {
-    public final static int SIZE = 250;
-    private final ArrayList<Agent> agents;  // arraylist for O(1) random access time
+    public final static int SIZE = 150;
+    protected final ArrayList<Agent> agents;  // arraylist for O(1) random access time
     private boolean isRunning;
     private boolean isSuspended;
     transient private Timer timer; // timers aren't serializable
@@ -109,7 +109,9 @@ public abstract class Simulation extends Model {
         timer.cancel();
         timer.purge();
     }
-
+    public int getTime(){
+        return clock;
+    }
     public boolean isRunning() {
         return isRunning;
     }
