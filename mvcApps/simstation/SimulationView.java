@@ -22,8 +22,8 @@ public class SimulationView extends View {
         double cellHeight = ((double)getHeight())/ Simulation.SIZE;
 
         while (it.hasNext()) {
-            Agent c = it.next();
-            gc.fillOval((int)(c.getXc() *cellWidth), (int)(c.getYc() *cellHeight), (int)cellWidth, (int)cellHeight);
+            Agent a = it.next();
+            gc.fillRect((int)(a.getXc() *cellWidth), (int)(a.getYc() *cellHeight), (int)cellWidth, (int)cellHeight);
         }
     }
 

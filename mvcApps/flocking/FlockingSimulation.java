@@ -16,9 +16,9 @@ public class FlockingSimulation extends Simulation {
     @Override
     public String[] getStats() {
         int[] speeds = new int[5];
-        Iterator<Agent> agentIterator = agentIterator();
-        while (agentIterator.hasNext()){
-            speeds[((Bird)agentIterator.next()).getSpeed()-1]++;
+        Iterator<Agent> it = agentIterator();
+        while (it.hasNext()){
+            speeds[((Bird)it.next()).getSpeed()-1]++;
         }
         String[] stats = new String[5];
         StringBuilder builder = new StringBuilder();

@@ -4,7 +4,7 @@ import java.util.*;
 import mvc.*;
 
 public abstract class Simulation extends Model {
-    public final static int SIZE = 250;
+    public final static int SIZE = 150;
     protected final ArrayList<Agent> agents;  // arraylist for O(1) random access time
     private boolean isRunning;
     private boolean isSuspended;
