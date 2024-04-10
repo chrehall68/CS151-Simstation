@@ -8,10 +8,11 @@ public class Guy extends Agent {
     private boolean isInfected;
     public Guy(){
         super();
-        if (infect(PlagueSimulation.INITIALINFECTION)){
-            isInfected = true;
-        }
-        else{isInfected = false;}
+        //if (infect(PlagueSimulation.INITIALINFECTION)){
+        //    isInfected = true;
+        //}
+        //else{isInfected = false;}
+        isInfected = false;
         heading = Heading.random();
     }
     private boolean infect(int rate){
@@ -20,6 +21,7 @@ public class Guy extends Agent {
         }
         return false;
     }
+    public void infect(){this.isInfected=true;}
     private boolean resist(int rate){
         if (Utilities.rng.nextInt(100)<rate){
             return true;

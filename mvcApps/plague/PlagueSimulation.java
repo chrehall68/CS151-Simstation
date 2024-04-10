@@ -10,11 +10,24 @@ public class PlagueSimulation extends Simulation {
     public static int COMMUNITYSIZE = 20;
     public static int VIRULENCE = 50; // % chance of infection
     public static int RESISTANCE = 2; // % chance of resisting infection
-    public static int INITIALINFECTION = 5;
+    public static int INITIALINFECTION = 1; //NUMBER of initially infected guys
+    public int infected;
     @Override
     public void populate() {
+        infected = 0;
         for(int i = 0; i < COMMUNITYSIZE; i++)
             addAgent(new Guy());
+        initialize();
+    }
+    private void initialize(){
+        Iterator<Agent> it = agentIterator();
+        while(it.hasNext()){
+            if (infected< INITIALINFECTION){
+                ((Guy)it.next()).infect();
+                infected++;
+            }
+            else {it.next();}
+        }
     }
     @Override
     public String[] getStats() {
@@ -24,6 +37,9 @@ public class PlagueSimulation extends Simulation {
     }
     private int getPercentInfected() {
         //iterate through agents and see what percentage of them is infected
+        return 100*getNumInfected()/COMMUNITYSIZE;
+    }
+    public int getNumInfected(){
         int infectedCount = 0;
         Iterator<Agent> it = agentIterator();
         while (it.hasNext()) {
@@ -31,7 +47,7 @@ public class PlagueSimulation extends Simulation {
                 infectedCount += 1;
             }
         }
-        return 100*infectedCount/COMMUNITYSIZE;
+        return infectedCount;
     }
     public static void main(String[] args) {
         AppFactory factory = new PlagueFactory();
