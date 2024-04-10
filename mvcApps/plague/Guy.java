@@ -31,16 +31,13 @@ public class Guy extends Agent {
     public boolean isInfected(){
         return isInfected;
     }
-    public void interact(){
-
-    }
     @Override
     public void update() {
         //int steps = Utilities.rng.nextInt(10) + 1;
         Guy neighbor = (Guy)world.getNeighbor(this, RADIUS);
         if (neighbor != null && neighbor.isInfected && !this.isInfected){
             isInfected = infect(PlagueSimulation.VIRULENCE);
-            isInfected = !resist(PlagueSimulation.RESISTANCE);
+            if (resist(PlagueSimulation.RESISTANCE)){isInfected = false ;}
         }
         heading = Heading.random();
         move(3);

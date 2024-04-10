@@ -1,6 +1,5 @@
 package plague;
 
-import flocking.FlockingFactory;
 import simstation.*;
 import mvc.*;
 
@@ -8,8 +7,8 @@ import java.util.Iterator;
 
 public class PlagueSimulation extends Simulation {
     public static int COMMUNITYSIZE = 20;
-    public static int VIRULENCE = 50; // % chance of infection
-    public static int RESISTANCE = 2; // % chance of resisting infection
+    public static int VIRULENCE = 10; // % chance of infection
+    public static int RESISTANCE = 50; // % chance of resisting infection
     public static int INITIALINFECTION = 1; //NUMBER of initially infected guys
     public int infected;
     @Override
@@ -31,7 +30,7 @@ public class PlagueSimulation extends Simulation {
     }
     @Override
     public String[] getStats() {
-        return new String[]{"#agents = " + agents.size()
+        return new String[]{"# agents = " + agents.size()
                             + "\nclock = " + getTime()
                             + "\n% infected = " + getPercentInfected()};
     }
