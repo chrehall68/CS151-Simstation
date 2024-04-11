@@ -68,7 +68,7 @@ public abstract class Agent implements Serializable, Runnable {
 
     public abstract void update(); // child classes should flush this out
 
-    public void move(int steps) {
+    public synchronized void move(int steps) {
         for (int i = 0; i < steps; i++) {
             // move 1 step
             xc = (xc + Simulation.SIZE + heading.getxDir()) % Simulation.SIZE;
