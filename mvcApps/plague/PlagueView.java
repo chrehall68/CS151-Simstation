@@ -12,18 +12,10 @@ public class PlagueView extends SimulationView {
     public PlagueView(Model model) {
         super(model);
     }
-    protected void drawAgents(Graphics gc) {
-        Iterator<Agent> it = model.as(Simulation.class).agentIterator();
 
-        double cellWidth = ((double)getWidth())/ Simulation.SIZE;
-        double cellHeight = ((double)getHeight())/ Simulation.SIZE;
-
-        while (it.hasNext()) {
-            Guy a = (Guy)it.next();
-            if (a.isInfected())
-                {gc.setColor(Color.RED);}
-            else{gc.setColor(Color.GREEN);}
-            gc.fillRect((int)(a.getXc() *cellWidth), (int)(a.getYc() *cellHeight), (int)cellWidth, (int)cellHeight);
-        }
+    @Override
+    protected Color getAgentColor(Agent a) {
+        if (((Guy)a).isInfected()) return Color.RED;
+        return Color.GREEN;
     }
 }

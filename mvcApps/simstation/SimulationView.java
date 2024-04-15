@@ -16,15 +16,18 @@ public class SimulationView extends View {
 
     protected void drawAgents(Graphics gc) {
         Iterator<Agent> it = model.as(Simulation.class).agentIterator();
-        gc.setColor(agentColor);
 
         double cellWidth = ((double)getWidth())/ Simulation.SIZE;
         double cellHeight = ((double)getHeight())/ Simulation.SIZE;
 
         while (it.hasNext()) {
             Agent a = it.next();
+            gc.setColor(getAgentColor(a));
             gc.fillRect((int)(a.getXc() *cellWidth), (int)(a.getYc() *cellHeight), (int)cellWidth, (int)cellHeight);
         }
+    }
+    protected Color getAgentColor(Agent agent){
+        return agentColor;
     }
 
     public void paintComponent(Graphics gc) {
