@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 class Prisoner extends Agent {
     private static final int RADIUS = 20;
+    private static final int MOVE_AMT = 10;
     private int fitness = 0;
     private int fitnessGained = 0;
     private int vindictiveness;
@@ -89,9 +90,9 @@ class Prisoner extends Agent {
             }
         }
         // move randomly
-        for (int i=0;i<3;i++) {
+        for (int i=0;i<MOVE_AMT;i++) {
             heading = Heading.random();
-            move(5);
+            move(1);
         }
     }
 
