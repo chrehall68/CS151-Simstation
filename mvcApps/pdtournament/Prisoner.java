@@ -19,7 +19,7 @@ class Prisoner extends Agent {
         super();
         this.s = s;
         this.strategyAsInt = i;
-        this.vindictiveness = Utilities.rng.nextInt(0,TournamentSimulation.MAX_VINDICTIVENESS);
+        this.vindictiveness = Utilities.rng.nextInt(TournamentSimulation.MAX_VINDICTIVENESS);
         // add random vindictiveness capped at global maximum
         grudges = new HashMap<>();
     }
@@ -81,7 +81,7 @@ class Prisoner extends Agent {
             // if this is cheated, has at least 3 fitness, is not a cheater, and randomly passes a vindictiveness check,
             // punish that cheater, losing 3 of own fitness and forcing the cheater to lose 10
             if (partnerCheated && strategyAsInt != 0 && fitness >= 3 && vindictiveness > 0) {
-                int punish = Utilities.rng.nextInt(0,vindictiveness);
+                int punish = Utilities.rng.nextInt(vindictiveness);
                 if (punish >= TournamentSimulation.PUNISH_THRESHOLD) {//
                     updateFitness(-3);
                     partner.updateFitness(-10);

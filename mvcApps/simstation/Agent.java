@@ -60,10 +60,15 @@ public abstract class Agent implements Serializable, Runnable {
     public synchronized void resume() {
         suspended = false;
         notify();
+
+        // allow resuming after loading
+        if (myThread == null){
+            start();
+        }
     }
 
     public synchronized void stop() {
-        stopped = true;
+        stopped = true;  // once stopped, CANNOT be resumed
     }
 
     public abstract void update(); // child classes should flush this out

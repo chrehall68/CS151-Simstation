@@ -7,7 +7,7 @@ public abstract class SimStationFactory implements AppFactory {
 
     @Override
     public View makeView(Model m) {
-        return new SimulationView((Simulation) m);
+        return new SimulationView( m);
     }
 
     @Override
@@ -15,10 +15,10 @@ public abstract class SimStationFactory implements AppFactory {
 
     @Override
     public String[] getHelp() {
-        return new String[] { "Press Start to populate and start agents",
+        return new String[] { "Press Start to repopulate and start agents",
                 "Press Suspend to pause all agents",
                 "Press Resume to un-pause all agents",
-                "Press Stop to halt all agents",
+                "Press Stop to halt all agents. They cannot be resumed after stopping.",
                 "Press Stats to view the current simulation statistics" };
     }
 

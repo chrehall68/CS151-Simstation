@@ -1,6 +1,8 @@
 package simstation;
 
-public class Heading {
+import java.io.Serializable;
+
+public class Heading implements Serializable {
     private final double xDir;
     private final double yDir;
 

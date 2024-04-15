@@ -26,6 +26,7 @@ public abstract class Simulation extends Model {
     public void start() {
         clock = 0;
         startTimer();
+        stop();  // stop any agents
         agents.clear();
         populate();
         for (Agent a : agents) {
