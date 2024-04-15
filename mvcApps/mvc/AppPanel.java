@@ -62,7 +62,7 @@ public class AppPanel extends JPanel implements ActionListener, Subscriber {
      * inside every `main` method in a customization. It is blocking.
      */
     public void display() {
-        display(1200, 700);
+        display(800, 800);
     }
     /**
      * Creates a frame and displays the app panel. This is what should be

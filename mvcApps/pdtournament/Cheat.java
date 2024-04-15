@@ -1,10 +1,8 @@
 package pdtournament;
-import simstation.*;
-import mvc.*;
+
+import java.util.HashMap;
 
 public class Cheat implements Strategy {
     @Override
-    public boolean decide(boolean partnerCheated) {
-        return false;
-    }
+    public boolean decide(HashMap<Prisoner,Boolean> grudges, Prisoner partner) { return false; }
 }
