@@ -1,15 +1,12 @@
 package pdtournament;
-import simstation.*;
-import mvc.*;
+
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class Tit4Tat implements Strategy {
+public class Tit4Tat implements Strategy, Serializable {
     @Override
     public boolean decide(HashMap<Prisoner,Boolean> grudges, Prisoner partner) {
-        if (grudges.containsKey(partner) && grudges.get(partner)) {
-            // cheats if the partner cheated last time
-            return false;
-        }
-        return true;
+        // cheats if the partner cheated last time
+        return !grudges.containsKey(partner) || !grudges.get(partner);
     }
 }
