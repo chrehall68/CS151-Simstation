@@ -107,8 +107,10 @@ public abstract class Simulation extends Model {
     }
 
     private void stopTimer() {
-        timer.cancel();
-        timer.purge();
+        if (timer != null){
+            timer.cancel();
+            timer.purge();
+        }
     }
     public int getTime(){
         return clock;
