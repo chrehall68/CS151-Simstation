@@ -34,6 +34,7 @@ public abstract class Agent implements Serializable, Runnable {
     @Override
     public void run() {
         myThread = Thread.currentThread();
+        checkSuspended();
         onStart();
         while (!stopped) {
             try {

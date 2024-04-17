@@ -3,6 +3,8 @@ package simstation;
 import mvc.*;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.util.Iterator;
 
 public class SimulationPanel extends AppPanel {
     public SimulationPanel(AppFactory factory) {
@@ -20,5 +22,25 @@ public class SimulationPanel extends AppPanel {
         JPanel container = new JPanel();
         container.add(control);
         controls.add(container);
+    }
+
+    public void setModel(Model m) {  // Dr. Pearce's setModel
+        super.setModel(m); // calling AppPanel.setModel(m)
+        Simulation s = (Simulation)m;
+        Iterator<Agent> it = s.agentIterator();
+        while(it.hasNext()) {
+            Thread t = new Thread(it.next());
+            t.start(); // this will call Agent.run (see below)
+        }
+    }
+    public void actionPerformed(ActionEvent actionEvent) {
+        String cmmd = actionEvent.getActionCommand();
+        Simulation simulation = (Simulation) model;
+
+        if ((cmmd.equals("Open") || cmmd.equals("Save") || cmmd.equals("New") || cmmd.equals("Save As") || cmmd.equals("Quit")) && simulation.isRunning() && !simulation.isSuspended()) {
+            Utilities.error("Cannot perform action while simulation isn't suspended. Please suspend it first.");
+            return;
+        }
+        super.actionPerformed(actionEvent);
     }
 }
